@@ -1,0 +1,190 @@
+﻿
+@{
+    ViewBag.Title = "Checkout";
+    Layout = "~/Views/Shared/_LayoutPageHome.cshtml";
+    ShipFood.Models.Cart cart = ViewBag.cart;
+    ShipFood.Models.City city = new ShipFood.Models.City();
+    List<ShipFood.Models.tbLoaiHinhThanhToan> lhtt = ViewBag.phuongthuctt;
+    List<ShipFood.Models.tbThongTinDatHang> ttdh = ViewBag.diachicosan;
+}
+
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ogani Template">
+    <meta name="keywords" content="Ogani, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ogani | Template</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link href="~/Source/Cart/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Source/Cart/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="~/Source/Cart/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="~/Source/Cart/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="~/Source/Cart/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="~/Source/Cart/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="~/Source/Cart/css/style.css" type="text/css">
+</head>
+
+<body>
+    <!-- Breadcrumb Section Begin -->
+    <section style="margin-top:200px" class="breadcrumb-section set-bg" data-setbg="https://localhost:44363/Source/Restaurant/images/card/2.png">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2 style="color:green">Checkout</h2>
+                        <div class="breadcrumb__option">
+                            <a href="~/Home">Trang chủ</a>
+                            <span>Checkout</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+    <!-- Checkout Section Begin -->
+    <section class="checkout spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h6 style="height:50px;border:1px solid #6AB963;color:black;margin-bottom:20px">
+                        <form style="font-weight:800">
+                            <input type="radio" name="RadioAddressType" id="new" checked /><span style="margin:20px 20px 20px 5px;color:black">Nhập thông tin giao hàng mới</span>
+                            <input type="radio" name="RadioAddressType" id="current" /><span style="margin: 20px 20px 20px 5px; color: black">Lấy địa chỉ hiện tại</span>
+                            <input type="radio" name="RadioAddressType" id="available" /><span style="margin: 20px 20px 20px 5px; color: black ">Chọn địa chỉ có sẵn</span>
+                        </form>
+
+                    </h6>
+                    
+                </div>
+            </div>
+            <div class="checkout__form">
+                <h4>Thông tin chi tiết đơn hàng</h4>
+                
+                <form action="~/Cart/Checkout" method="post">
+                    <div class="selectGroup hidden">
+                        @if (ttdh.Count == 0)
+                        {
+                            <strong>Bạn chưa có địa chỉ nào</strong>
+                        }
+
+                        @if (ttdh.Count != 0)
+                        {
+                            <select name="mattdh">
+                                <option >Chọn thông tin đặt hàng</option>
+                                @foreach (var i in ttdh)
+                                {
+                                    <option value="@i.mattdh">@i.sdt - @i.tennguoinhan - @i.diachi</option>
+                                }
+                            </select>
+                        }
+
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-8 col-md-6 formInfor">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="checkout__input">
+                                        <p><strong>Họ tên người nhận</strong> <span>*</span></p>
+                                        <input name="hoten" placeholder="Nhập họ tên người nhận" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkout__input">
+                                    <p>Địa chỉ<span> *</span> </p>
+                                    <div style="margin-bottom:10px"><strong>@city.nameCity</strong></div>
+                                    <div>
+                                        <select style=" width: 100%;" name="quan">
+                                            @foreach (var i in city.districts)
+                                            {
+                                                <option style="width:600px;" value="@i.nameDistrict">@i.nameDistrict</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div style="margin-top:10px" class="checkout__input">
+                                        <div>
+                                            <input style="margin-bottom:10px" type="text" name="diachicuthe" placeholder="Nhập địa chỉ cụ thể" class="checkout__input__add">
+                                            <input type="text" name="diachiadd" placeholder="Số tầng, Số phòng,....">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="checkout__input">
+                                        <p><strong>Số điện thoại</strong><span>*</span></p>
+                                        <input name="SDT" placeholder="Nhập số điện thoại" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="checkout__input">
+                                <p><strong>Ghi chú đơn hàng</strong><span></span></p>
+                                <input type="text" name="note"
+                                       placeholder="Ghi chú đơn hàng">
+                            </div>
+                            <div class="checkout__input__checkbox">
+                                <label for="diff-acc">
+                                    Tôi xác nhận thông tin trên là đúng
+                                    <input type="checkbox" id="diff-acc">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6" style="margin:20px auto">
+                            <div class="checkout__order">
+                                <h4>Đơn hàng</h4>
+                                <div class="checkout__order__products">Món ăn <span>Tổng tiền</span></div>
+                                <ul>
+                                    @foreach (var i in cart.monAns)
+                                    {
+                                        <li>@i.tenmon (@i.soLuong) <span>@Math.Round(Double.Parse((i.soLuong * i.giatien).ToString())) VNĐ</span></li>
+                                    }
+                                </ul>
+                                <div class="checkout__order__total">Tổng tiền món <span>@Math.Round(Double.Parse(cart.tongTien.ToString())) VNĐ</span></div>
+                                <div class="checkout__order__total">Phí ship <span>15000 VNĐ</span></div>
+                                <div class="checkout__order__total">Tổng <span>@Math.Round(Double.Parse((cart.tongTien + 15000).ToString())) VNĐ</span></div>
+
+                                @foreach (var i in lhtt)
+                                {
+                                    <div style="margin-top:5px;padding: 5px; border: 1px solid; display: flex;">
+                                        <label style="margin:0px;width:100%">
+                                            <span class="checkmark"></span>
+                                            <input name="pttt" type="radio" value="@i.mahttt" id="payment">
+                                            @i.tenhinhthuc
+                                        </label>
+                                    </div>
+                                }
+
+                                <button type="submit" class="site-btn">Xác nhận</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <!-- Checkout Section End -->
+    <!-- Js Plugins -->
+    <script src="~/Source/Cart/js/jquery-3.3.1.min.js"></script>
+    <script src="~/Source/Cart/js/bootstrap.min.js"></script>
+    <script src="~/Source/Cart/js/jquery-ui.min.js"></script>
+    <script src="~/Source/Cart/js/jquery.slicknav.js"></script>
+    <script src="~/Source/Cart/js/mixitup.min.js"></script>
+    <script src="~/Source/Cart/js/owl.carousel.min.js"></script>
+    <script src="~/Source/Cart/js/main.js"></script>
+    <script src="~/Source/Cart/js/checkout.js"></script>
+</body>
+
+</html>
+

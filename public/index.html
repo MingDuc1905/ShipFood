@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShipFood - Giao đồ ăn nhanh</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <h1 class="logo">ShipFood</h1>
+            <ul class="nav-menu">
+                <li><a href="/">Trang chủ</a></li>
+                <li><a href="/cart">Giỏ hàng</a></li>
+                <li><a href="/admin">Quản lý</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>Giao đồ ăn nhanh chóng, an toàn</h2>
+                <p>Đặt hàng ngay và nhận trong 30 phút</p>
+                <input type="text" id="searchInput" placeholder="Tìm nhà hàng, món ăn...">
+            </div>
+        </section>
+
+        <section class="content">
+            <div class="container">
+                <div id="restaurants" class="restaurant-list"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 ShipFood. All rights reserved.</p>
+    </footer>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>

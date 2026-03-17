@@ -2,12 +2,12 @@
   "name": "shipfood-api",
   "version": "1.0.0",
   "description": "ShipFood - Food Delivery Platform",
-  "main": "server.js",
+  "main": "api/index.js",
   "type": "module",
   "scripts": {
     "dev": "node --watch server.js",
     "start": "node server.js",
-    "build": "echo 'No build needed'",
+    "build": "npm install",
     "migrate": "node --loader tsx ./scripts/migrate.js",
     "seed": "node --loader tsx ./scripts/seed.js"
   },

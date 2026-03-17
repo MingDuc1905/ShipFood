@@ -11,18 +11,18 @@ async function loadRestaurants() {
       return;
     }
 
-    restaurantList.innerHTML = restaurants.map(restaurant => `
-      <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-        <div class="restaurant-card" onclick="viewRestaurant(${restaurant.id})">
-          <img src="${restaurant.image || 'https://via.placeholder.com/300x200?text=' + encodeURIComponent(restaurant.name)}" alt="${restaurant.name}">
+    restaurantList.innerHTML = restaurants.map((restaurant, index) => `
+      <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="${(index * 0.1).toFixed(1)}s">
+        <div class="restaurant-card">
+          <img src="${restaurant.image || 'https://via.placeholder.com/300x200?text=' + encodeURIComponent(restaurant.name)}" alt="${restaurant.name}" />
           <div class="restaurant-card-body">
             <h5>${restaurant.name}</h5>
             <p>${restaurant.description || 'Nhà hàng chất lượng'}</p>
-            <p class="address"><i class="fas fa-map-marker-alt"></i>${restaurant.address || 'Hà Nội'}</p>
+            <p class="address"><i class="fas fa-map-marker-alt"></i> ${restaurant.address || 'Hà Nội'}</p>
             <p class="rating">
               <i class="fas fa-star"></i> ${restaurant.rating || 4.5}
             </p>
-            <button class="btn btn-primary btn-sm w-100 mt-2">
+            <button class="btn btn-primary btn-sm w-100 mt-2" onclick="addToCart(${restaurant.id})">
               <i class="fas fa-shopping-cart me-2"></i>Đặt hàng
             </button>
           </div>
@@ -30,8 +30,10 @@ async function loadRestaurants() {
       </div>
     `).join('');
 
-    // Reinitialize AOS animations
-    AOS.refresh();
+    // Reinitialize WOW animations
+    if (typeof WOW !== 'undefined') {
+      new WOW().init();
+    }
   } catch (error) {
     console.error('Error loading restaurants:', error);
     document.getElementById('restaurantList').innerHTML =
@@ -59,18 +61,18 @@ function searchRestaurant(e) {
         return;
       }
 
-      restaurantList.innerHTML = results.map(restaurant => `
-        <div class="col-lg-4 col-md-6 wow fadeInUp">
-          <div class="restaurant-card" onclick="viewRestaurant(${restaurant.id})">
-            <img src="${restaurant.image || 'https://via.placeholder.com/300x200?text=' + encodeURIComponent(restaurant.name)}" alt="${restaurant.name}">
+      restaurantList.innerHTML = results.map((restaurant, index) => `
+        <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="${(index * 0.1).toFixed(1)}s">
+          <div class="restaurant-card">
+            <img src="${restaurant.image || 'https://via.placeholder.com/300x200?text=' + encodeURIComponent(restaurant.name)}" alt="${restaurant.name}" />
             <div class="restaurant-card-body">
               <h5>${restaurant.name}</h5>
               <p>${restaurant.description || 'Nhà hàng chất lượng'}</p>
-              <p class="address"><i class="fas fa-map-marker-alt"></i>${restaurant.address || 'Hà Nội'}</p>
+              <p class="address"><i class="fas fa-map-marker-alt"></i> ${restaurant.address || 'Hà Nội'}</p>
               <p class="rating">
                 <i class="fas fa-star"></i> ${restaurant.rating || 4.5}
               </p>
-              <button class="btn btn-primary btn-sm w-100 mt-2">
+              <button class="btn btn-primary btn-sm w-100 mt-2" onclick="addToCart(${restaurant.id})">
                 <i class="fas fa-shopping-cart me-2"></i>Đặt hàng
               </button>
             </div>
@@ -78,15 +80,11 @@ function searchRestaurant(e) {
         </div>
       `).join('');
 
-      AOS.refresh();
+      if (typeof WOW !== 'undefined') {
+        new WOW().init();
+      }
     })
     .catch(error => console.error('Error searching:', error));
-}
-
-// View restaurant details
-function viewRestaurant(id) {
-  alert(`Xem nhà hàng ${id} - tính năng đang phát triển`);
-  // Có thể redirect tới trang chi tiết sau
 }
 
 // Initialize on page load

@@ -1,0 +1,42 @@
+{
+  "name": "shipfood-api",
+  "version": "1.0.0",
+  "description": "ShipFood - Food Delivery Platform",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch server.js",
+    "start": "node server.js",
+    "build": "echo 'No build needed'",
+    "migrate": "node --loader tsx ./scripts/migrate.js",
+    "seed": "node --loader tsx ./scripts/seed.js"
+  },
+  "keywords": ["food-delivery", "shipfood"],
+  "author": "MingDuc1905",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^5.7.0",
+    "@vercel/blob": "^0.21.0",
+    "@vercel/postgres": "^0.7.2",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-fileupload": "^1.5.0",
+    "jsonwebtoken": "^9.1.2",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.6.5",
+    "node-paypal": "^2.0.0",
+    "pg": "^8.11.3"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.10.5",
+    "nodemon": "^3.0.2",
+    "prisma": "^5.7.0",
+    "tsx": "^4.7.0"
+  },
+  "engines": {
+    "node": "18.x"
+  }
+}

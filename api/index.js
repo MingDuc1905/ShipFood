@@ -1,71 +1,34 @@
-import express from 'express';
-import cors from 'cors';
+export default function handler(req, res) {
+  // Simple health check first
+  if (req.url === '/' || req.url === '/api/health') {
+    return res.status(200).json({ 
+      status: 'OK',
+      message: 'ShipFood API running on Vercel ✅',
+      timestamp: new Date().toISOString(),
+      environment: process.env.NODE_ENV || 'development'
+    });
+  }
 
-// Routes
-import authRoutes from '../src/routes/auth.js';
-import restaurantRoutes from '../src/routes/restaurant.js';
-import menuRoutes from '../src/routes/menu.js';
-import orderRoutes from '../src/routes/order.js';
-import shipperRoutes from '../src/routes/shipper.js';
-import adminRoutes from '../src/routes/admin.js';
+  // Root endpoint
+  if (req.url === '/' && req.method === 'GET') {
+    return res.status(200).json({
+      message: '🍜 ShipFood API',
+      version: '1.0.0',
+      status: 'running',
+      endpoints: [
+        { path: '/', method: 'GET', description: 'Root endpoint' },
+        { path: '/api/health', method: 'GET', description: 'Health check' },
+        { path: '/api/auth/register', method: 'POST', description: 'Register user' },
+        { path: '/api/auth/login', method: 'POST', description: 'Login user' },
+      ]
+    });
+  }
 
-// Middleware
-import { errorHandler } from '../src/middleware/errorHandler.js';
-
-const app = express();
-
-// Middleware
-app.use(cors({
-  origin: '*',
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
-
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ limit: '10mb', extended: true }));
-
-// Health Check
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'OK', message: 'ShipFood API is running ✅', timestamp: new Date() });
-});
-
-// API Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/restaurants', restaurantRoutes);
-app.use('/api/menus', menuRoutes);
-app.use('/api/orders', orderRoutes);
-app.use('/api/shippers', shipperRoutes);
-app.use('/api/admin', adminRoutes);
-
-// Root endpoint
-app.get('/', (req, res) => {
-  res.json({
-    message: '🍜 ShipFood API',
-    version: '1.0.0',
-    status: 'running',
-    endpoints: [
-      '/api/health',
-      '/api/auth',
-      '/api/restaurants',
-      '/api/menus',
-      '/api/orders',
-      '/api/shippers',
-      '/api/admin'
-    ]
-  });
-});
-
-// 404 Handler
-app.use((req, res) => {
-  res.status(404).json({ 
+  // TODO routes would go here
+  res.status(404).json({
     error: 'Route not found',
-    path: req.path,
-    method: req.method
+    path: req.url,
+    method: req.method,
+    message: 'Use GET / or GET /api/health for testing'
   });
-});
-
-// Error Handler
-app.use(errorHandler);
-
-export default app;
+}

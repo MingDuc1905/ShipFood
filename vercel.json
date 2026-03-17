@@ -1,25 +1,6 @@
 {
   "version": 2,
   "buildCommand": "npm install",
-  "framework": "express",
-  "functions": {
-    "api/**/*.js": {
-      "runtime": "nodejs18.x"
-    },
-    "server.js": {
-      "runtime": "nodejs18.x"
-    }
-  },
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/index.js"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/api/index.js"
-    }
-  ],
   "env": {
     "NODE_ENV": "production"
   }

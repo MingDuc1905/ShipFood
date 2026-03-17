@@ -1,43 +1,214 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
     <title>ShipFood - Giao đồ ăn nhanh</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Lora:wght@600;700&display=swap" rel="stylesheet" />
+
+    <!-- Icon Font -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- AOS Animation -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link href="/css/style.css" rel="stylesheet" />
 </head>
+
 <body>
-    <nav class="navbar">
-        <div class="container">
-            <h1 class="logo">ShipFood</h1>
-            <ul class="nav-menu">
-                <li><a href="/">Trang chủ</a></li>
-                <li><a href="/cart">Giỏ hàng</a></li>
-                <li><a href="/admin">Quản lý</a></li>
-            </ul>
+    <!-- Top Bar Start -->
+    <div class="container-fluid bg-light px-0 d-none d-lg-flex">
+        <div class="row gx-0 w-100">
+            <div class="col-lg-6 px-5 text-start">
+                <small><i class="fa fa-map-marker-alt me-2"></i>123 Đường Ngô Gia Tự, Hà Nội</small>
+                <small class="ms-4"><i class="fa fa-envelope me-2"></i>ShipFood@contact.com</small>
+            </div>
+            <div class="col-lg-6 px-5 text-end">
+                <small>Theo dõi chúng tôi:</small>
+                <a class="text-body ms-3" href="#"><i class="fab fa-facebook-f"></i></a>
+                <a class="text-body ms-3" href="#"><i class="fab fa-twitter"></i></a>
+                <a class="text-body ms-3" href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </div>
+    <!-- Top Bar End -->
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg navbar-light py-lg-0 px-lg-5 sticky-top bg-white shadow-sm">
+        <a href="/" class="navbar-brand ms-4 ms-lg-0">
+            <h1 class="fw-bold m-0">
+                <span style="color: #FF6B35;">Ship</span><span style="color: #004E89;">Food</span>
+            </h1>
+        </a>
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Search Form -->
+        <div class="search-box ms-3 me-3">
+            <form class="d-flex" onsubmit="searchRestaurant(event)">
+                <input type="text" id="searchInput" class="form-control" placeholder="Tìm nhà hàng...">
+                <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+            </form>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto p-4 p-lg-0">
+                <a href="/" class="nav-item nav-link active">Trang chủ</a>
+                <a href="#restaurants" class="nav-item nav-link">Nhà hàng</a>
+                <a href="/cart" class="nav-item nav-link">Giỏ hàng <span class="badge bg-danger" id="cartCount">0</span></a>
+            </div>
+            <div class="d-none d-lg-flex ms-2">
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                        <i class="fa fa-user-circle fa-2x"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end p-3" aria-labelledby="userDropdown">
+                        <p id="userInfo" style="display:none;"><strong id="username">Người dùng</strong></p>
+                        <a href="/login" id="loginBtn" class="dropdown-item">Đăng nhập</a>
+                        <a href="/register" id="registerBtn" class="dropdown-item">Đăng ký</a>
+                        <a href="/" id="logoutBtn" class="dropdown-item" style="display:none;" onclick="logout()">Đăng xuất</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </nav>
+    <!-- Navbar End -->
 
-    <main>
-        <section class="hero">
-            <div class="container">
-                <h2>Giao đồ ăn nhanh chóng, an toàn</h2>
-                <p>Đặt hàng ngay và nhận trong 30 phút</p>
-                <input type="text" id="searchInput" placeholder="Tìm nhà hàng, món ăn...">
+    <!-- Hero Section Start -->
+    <div class="container-fluid px-0 mb-5" id="heroSection">
+        <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="https://images.unsplash.com/photo-1563379091339-03b21ab9a565?w=1200&h=400&fit=crop" class="w-100" alt="Banner 1">
+                    <div class="carousel-caption d-flex flex-column justify-content-center" style="height: 400px;">
+                        <h1 class="display-2 fw-bold mb-5 animated slideInDown">ShipFood</h1>
+                        <p class="fs-5 mb-5 animated slideInUp">Giao đồ ăn nhanh, an toàn, giá tốt!</p>
+                        <div class="animated slideInUp">
+                            <a href="#restaurants" class="btn btn-primary rounded-pill py-3 px-5 me-3">Khám phá</a>
+                            <a href="#" class="btn btn-secondary rounded-pill py-3 px-5">Tìm hiểu</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="https://images.unsplash.com/photo-1495521821757-a1efb6729352?w=1200&h=400&fit=crop" class="w-100" alt="Banner 2">
+                    <div class="carousel-caption d-flex flex-column justify-content-center" style="height: 400px;">
+                        <h1 class="display-2 fw-bold mb-5 animated slideInDown">Đa dạng lựa chọn</h1>
+                        <p class="fs-5 mb-5 animated slideInUp">Hàng nghìn nhà hàng, quán ăn chất lượng</p>
+                        <div class="animated slideInUp">
+                            <a href="#restaurants" class="btn btn-primary rounded-pill py-3 px-5 me-3">Đặt ngay</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </section>
+            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            </button>
+        </div>
+    </div>
+    <!-- Hero Section End -->
 
-        <section class="content">
-            <div class="container">
-                <div id="restaurants" class="restaurant-list"></div>
+    <!-- Content Start -->
+    <div class="container-xxl py-5" id="restaurants">
+        <div class="container">
+            <div class="row g-0 gx-5 align-items-end mb-5">
+                <div class="col-lg-12">
+                    <div class="section-header text-start mb-5 wow fadeInUp" data-wow-delay="0.1s">
+                        <h1 class="display-5 mb-3">Danh sách nhà hàng</h1>
+                        <p>Khám phá các nhà hàng hàng đầu, chiêu thức nấu ăn tuyệt vời với ShipFood</p>
+                    </div>
+                </div>
             </div>
-        </section>
-    </main>
 
-    <footer>
-        <p>&copy; 2024 ShipFood. All rights reserved.</p>
+            <div id="restaurantList" class="row g-4">
+                <!-- Restaurants will be loaded here by JavaScript -->
+                <div class="col-12 text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Đang tải...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Content End -->
+
+    <!-- Features Start -->
+    <div class="container-xxl bg-light py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="feature-item text-center p-4 rounded-4">
+                        <i class="fas fa-shipping-fast fa-3x mb-4" style="color: #FF6B35;"></i>
+                        <h5 class="mb-3">Giao hàng nhanh</h5>
+                        <p class="m-0">Giao đồ ăn trong 30 phút hoặc miễn phí</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="feature-item text-center p-4 rounded-4">
+                        <i class="fas fa-lock fa-3x mb-4" style="color: #004E89;"></i>
+                        <h5 class="mb-3">An toàn & Vệ sinh</h5>
+                        <p class="m-0">Các nhà hàng được kiểm duyệt kỹ lưỡng</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="feature-item text-center p-4 rounded-4">
+                        <i class="fas fa-credit-card fa-3x mb-4" style="color: #FFB703;"></i>
+                        <h5 class="mb-3">Thanh toán an toàn</h5>
+                        <p class="m-0">Nạp ví, thanh toán online, tiền mặt</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Features End -->
+
+    <!-- Footer Start -->
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <h5 class="mb-4">ShipFood</h5>
+                    <p>Nền tảng giao đồ ăn hàng đầu Việt Nam</p>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="mb-4">Liên hệ</h5>
+                    <p><i class="fa fa-map-marker-alt me-2"></i>123 Đường Ngô Gia Tự, Hà Nội</p>
+                    <p><i class="fa fa-envelope me-2"></i>ShipFood@contact.com</p>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="mb-4">Theo dõi</h5>
+                    <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p>&copy; 2024 ShipFood. All rights reserved.</p>
+            </div>
+        </div>
     </footer>
+    <!-- Footer End -->
 
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
     <script src="/js/main.js"></script>
 </body>
+
 </html>

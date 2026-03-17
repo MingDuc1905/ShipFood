@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 require('dotenv').config();
@@ -11,10 +12,10 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Static files
-app.use(express.static('public'));
+// Static files - serve CSS, JS, images directly
+app.use(express.static(path.join(__dirname, 'public')));
 
-// Routes
+// API Routes - must come BEFORE the catch-all route
 app.use('/api/home', require('./routes/home'));
 app.use('/api/cart', require('./routes/cart'));
 app.use('/api/admin', require('./routes/admin'));
@@ -26,9 +27,14 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'ShipFood API is running' });
 });
 
-// Default route
+// Serve index.html for homepage
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html');
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// Catch-all route - serve index.html for all other non-API routes (SPA support)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Start server
